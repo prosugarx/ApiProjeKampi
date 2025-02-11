@@ -15,12 +15,45 @@ namespace ApiProjeKampi.WebApi.Controllers
         {
             _context = context;
         }
+
+        [HttpGet]
+        public IActionResult CategoryList()
+        {
+            var values = _context.Categories.ToList();
+            return Ok(values);
+        }
+
+
         [HttpPost]
         public IActionResult CreateCategory(Category category)
         {
             _context.Categories.Add(category);
             _context.SaveChanges();
             return Ok("Kategori ekleme işlemi başarılı");
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteCategories(int id)
+        {
+            var value = _context.Categories.Find(id);
+            _context.Categories.Remove(value);
+            _context.SaveChanges();
+            return Ok();
+        }
+
+        [HttpGet("GetCategories")]
+        public IActionResult GetCategories(int id)
+        {
+            var values= _context.Categories.Find(id);
+            return Ok(values);
+        }
+
+        [HttpPut]
+        public IActionResult UpdateCategories(Category category)
+        {
+            _context.Categories.Update(category);
+            _context.SaveChanges();
+            return Ok("Kategori güncelleme işlemi başarılı");
         }
     }
 }
